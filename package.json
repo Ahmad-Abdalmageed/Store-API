@@ -10,7 +10,9 @@
     "jasmine": "jasmine",
     "lint": "eslint . --ext .ts",
     "prettier": "prettier --config .prettierrc '**/*.ts' --write",
-    "test": "npm run build && npm run jasmine"
+    "up": "db-migrate up",
+    "down": "db-migrate down",
+    "testDB": "ENV=test db-migrate --env test up && npm run jasmine && db-migrate db:drop test"
   },
   "author": "Ahmad Abdalmageed",
   "license": "ISC",
