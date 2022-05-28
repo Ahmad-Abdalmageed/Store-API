@@ -33,7 +33,7 @@ export class UserTable {
   async getUser(userID: number): Promise<User> {
     return tryCatchWrap('Cannot Get User', async () => {
       // SQL Query
-      const sql = `SELECT * FROM Users WHERE id = ${userID}`;
+      const sql = `SELECT * FROM users WHERE id = ${userID}`;
 
       const results = await connectQuery(sql, client);
       return results.rows[0];
@@ -44,7 +44,7 @@ export class UserTable {
     return tryCatchWrap(
       `Could Not delete User with ID: ${userID}`,
       async () => {
-        const sql = `DELETE FROM Users 
+        const sql = `DELETE FROM users 
                    WHERE id = ${userID}
                    RETURNING *`;
         const results = await connectQuery(sql, client);
