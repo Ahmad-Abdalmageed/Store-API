@@ -1,17 +1,17 @@
 ----------------------------------------------------------
 CREATE TABLE Users(
-    id INTEGER NOT NULL,
-    FirstName VARCHAR(255) NOT NULL,
-    LastName VARCHAR(255) NOT NULL,
-    password INTEGER NOT NULL
+    id SERIAL NOT NULL,
+    FirstName VARCHAR(20) NOT NULL,
+    LastName VARCHAR(20) NOT NULL,
+    password varchar(20) NOT NULL
 );
 ALTER TABLE Users
     ADD CONSTRAINT "USERS_PK"
         PRIMARY KEY(id);
 ----------------------------------------------------------
 CREATE TABLE Products(
-    id INTEGER NOT NULL,
-    name VARCHAR(255) NOT NULL,
+    id SERIAL NOT NULL,
+    name VARCHAR(100) NOT NULL,
     price INTEGER NOT NULL,
     category INTEGER NULL
 );
@@ -20,10 +20,10 @@ ALTER TABLE Products
         PRIMARY KEY(id);
 ----------------------------------------------------------
 CREATE TABLE Orders(
-     id INTEGER NOT NULL,
+     id SERIAL NOT NULL,
      user_id INTEGER NOT NULL,
      quantity INTEGER NOT NULL,
-     status VARCHAR(255) NOT NULL,
+     status VARCHAR(20) NOT NULL,
      date DATE NOT NULL
 );
 ALTER TABLE Orders
@@ -36,7 +36,7 @@ ALTER TABLE Orders
             REFERENCES Users(id);
 ----------------------------------------------------------
 CREATE TABLE order_product(
-    id INTEGER NOT NULL,
+    id SERIAL NOT NULL,
     order_id INTEGER NOT NULL,
     prod_id INTEGER NOT NULL
 );

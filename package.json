@@ -4,9 +4,10 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "nodemon src/app.ts",
+    "start": "nodemon src/server.ts",
+    "watch": "tsc-watch --onSuccess \"node ./dist/server.js\"",
     "build": "npx tsc",
-    "dist": "node build/app.js",
+    "dist": "node build/server.js",
     "jasmine": "jasmine",
     "lint": "eslint . --ext .ts",
     "prettier": "prettier --config .prettierrc '**/*.ts' --write",

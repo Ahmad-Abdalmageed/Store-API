@@ -4,13 +4,13 @@
     "host": "127.0.0.1",
     "database": "store_api",
     "user": "store_api",
-    "password": "store_api#ahmed"
+    "password": "store_api_ahmed"
   },
   "test": {
     "driver": "pg",
     "host": "127.0.0.1",
     "database": "store_api_test",
     "user": "store_api",
-    "password": "store_api#ahmed"
+    "password": "store_api_ahmed"
   }
 }
