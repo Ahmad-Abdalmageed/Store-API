@@ -13,7 +13,7 @@ CREATE TABLE Products(
     id SERIAL NOT NULL,
     name VARCHAR(100) NOT NULL,
     price INTEGER NOT NULL,
-    category INTEGER NULL
+    category VARCHAR(100) NULL
 );
 ALTER TABLE Products
     ADD CONSTRAINT "Products_PK"
@@ -22,7 +22,6 @@ ALTER TABLE Products
 CREATE TABLE Orders(
      id SERIAL NOT NULL,
      user_id INTEGER NOT NULL,
-     quantity INTEGER NOT NULL,
      status VARCHAR(20) NOT NULL,
      date DATE NOT NULL
 );
@@ -38,7 +37,8 @@ ALTER TABLE Orders
 CREATE TABLE order_product(
     id SERIAL NOT NULL,
     order_id INTEGER NOT NULL,
-    prod_id INTEGER NOT NULL
+    prod_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL
 );
 ALTER TABLE order_product
     ADD CONSTRAINT "ORDER_PRODUCT_PK"
