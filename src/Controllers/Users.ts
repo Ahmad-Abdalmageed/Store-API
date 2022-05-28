@@ -6,11 +6,15 @@ import { apiError } from '../Errors/apiError';
 const users = new UserTable();
 
 // Return All Users Route Controller
-const index = tryCatchWrapExpress(async (req: Request, res: Response) => {
-  const results = await users.listAll();
-  res.status(200).json(results);
-});
-
+const index = tryCatchWrapExpress(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const results = await users.listAll();
+    if (!results || results.length == 0)
+      return next(new apiError(404, 'No Users Found'));
+    res.status(200).json(results);
+  }
+);
+// Create new User
 const create = tryCatchWrapExpress(async (req: Request, res: Response) => {
   const newUser: User = {
     FirstName: req.body.fname,
@@ -20,7 +24,7 @@ const create = tryCatchWrapExpress(async (req: Request, res: Response) => {
   const results = await users.create(newUser);
   res.status(200).json(results);
 });
-
+// Search with User ID
 const search = tryCatchWrapExpress(
   async (req: Request, res: Response, next: NextFunction) => {
     const results = await users.getUser(Number(req.params.uid));
@@ -29,7 +33,7 @@ const search = tryCatchWrapExpress(
     res.status(200).json(results);
   }
 );
-
+// Delete User
 const erase = tryCatchWrapExpress(
   async (req: Request, res: Response, next: NextFunction) => {
     const uid = Number(req.params.uid);
