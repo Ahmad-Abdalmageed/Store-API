@@ -53,7 +53,11 @@ var __generator =
       t,
       g;
     return (
-      (g = { next: verb(0), throw: verb(1), return: verb(2) }),
+      (g = {
+        next: verb(0),
+        throw: verb(1),
+        return: verb(2)
+      }),
       typeof Symbol === 'function' &&
       (g[Symbol.iterator] = function() {
         return this;
@@ -139,23 +143,22 @@ var __generator =
     }
   };
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.ProductTable = void 0;
-var db_1 = require('../db');
+exports.OrderTable = void 0;
 var Wrappers_1 = require('../Middleware/Wrappers');
 var helpers_1 = require('./helpers');
-// Product Controller
-var ProductTable = /** @class */ (function() {
-  function ProductTable() {
+var db_1 = require('../db');
+var OrderTable = /** @class */ (function() {
+  function OrderTable() {
   }
 
-  // List All Products
-  ProductTable.prototype.listAll = function() {
+  //  List All Orders
+  OrderTable.prototype.listAll = function() {
     return __awaiter(this, void 0, void 0, function() {
       var _this = this;
       return __generator(this, function(_a) {
         return [
           2 /*return*/,
-          (0, Wrappers_1.tryCatchWrap)('Cannot Get All Products', function() {
+          (0, Wrappers_1.tryCatchWrap)('Could Not Get All Oders', function() {
             return __awaiter(_this, void 0, void 0, function() {
               var results;
               return __generator(this, function(_a) {
@@ -164,7 +167,7 @@ var ProductTable = /** @class */ (function() {
                     return [
                       4 /*yield*/,
                       (0, helpers_1.connectQuery)(
-                        'SELECT * FROM products',
+                        'SELECT * FROM orders',
                         db_1.client
                       )
                     ];
@@ -179,29 +182,65 @@ var ProductTable = /** @class */ (function() {
       });
     });
   };
-  // Get a Single Product by an ID
-  ProductTable.prototype.getProduct = function(pid) {
+  // Create a New Order
+  OrderTable.prototype.create = function(order) {
+    return __awaiter(this, void 0, void 0, function() {
+      var _this = this;
+      return __generator(this, function(_a) {
+        return [
+          2 /*return*/,
+          (0, Wrappers_1.tryCatchWrap)('Could not Create Order', function() {
+            return __awaiter(_this, void 0, void 0, function() {
+              var sql, results;
+              return __generator(this, function(_a) {
+                switch (_a.label) {
+                  case 0:
+                    sql =
+                      'INSERT INTO orders(user_id, status, date)\n                 VALUES (\''
+                        .concat(order.uid, '\',\'')
+                        .concat(order.status, '\',\'')
+                        .concat(order.date, '\')\n                 RETURNING *');
+                    return [
+                      4 /*yield*/,
+                      (0, helpers_1.connectQuery)(sql, db_1.client)
+                    ];
+                  case 1:
+                    results = _a.sent();
+                    return [2 /*return*/, results.rows[0]];
+                }
+              });
+            });
+          })
+        ];
+      });
+    });
+  };
+  // Delete Existing Order using oid
+  OrderTable.prototype.delete = function(oid) {
     return __awaiter(this, void 0, void 0, function() {
       var _this = this;
       return __generator(this, function(_a) {
         return [
           2 /*return*/,
           (0, Wrappers_1.tryCatchWrap)(
-            'Could not Get Product with ID '.concat(pid),
+            'Could not Create Order with id : '.concat(oid),
             function() {
               return __awaiter(_this, void 0, void 0, function() {
-                var sql, result;
+                var sql, results;
                 return __generator(this, function(_a) {
                   switch (_a.label) {
                     case 0:
-                      sql = 'SELECT * FROM products WHERE id = '.concat(pid);
+                      sql = 'DELETE FROM orders WHERE id='.concat(
+                        oid,
+                        ' RETURNING *'
+                      );
                       return [
                         4 /*yield*/,
                         (0, helpers_1.connectQuery)(sql, db_1.client)
                       ];
                     case 1:
-                      result = _a.sent();
-                      return [2 /*return*/, result.rows[0]];
+                      results = _a.sent();
+                      return [2 /*return*/, results.rows[0]];
                   }
                 });
               });
@@ -211,36 +250,29 @@ var ProductTable = /** @class */ (function() {
       });
     });
   };
-  // Add a new Product
-  ProductTable.prototype.create = function(product) {
+  // Search a Product by ID
+  OrderTable.prototype.search = function(oid) {
     return __awaiter(this, void 0, void 0, function() {
       var _this = this;
       return __generator(this, function(_a) {
         return [
           2 /*return*/,
           (0, Wrappers_1.tryCatchWrap)(
-            'Could not Create a New Product',
+            'Could not Find Order with ID: '.concat(oid),
             function() {
               return __awaiter(_this, void 0, void 0, function() {
-                var sql, result;
+                var sql, results;
                 return __generator(this, function(_a) {
                   switch (_a.label) {
                     case 0:
-                      sql =
-                        'INSERT INTO products (name, price, category)\n                   VALUES (\''
-                          .concat(product.name, '\',\'')
-                          .concat(product.price, '\',\'')
-                          .concat(
-                            product.category,
-                            '\')\n                   RETURNING *'
-                          );
+                      sql = 'SELECT * FROM orders WHERE id = '.concat(oid);
                       return [
                         4 /*yield*/,
                         (0, helpers_1.connectQuery)(sql, db_1.client)
                       ];
                     case 1:
-                      result = _a.sent();
-                      return [2 /*return*/, result.rows];
+                      results = _a.sent();
+                      return [2 /*return*/, results.rows[0]];
                   }
                 });
               });
@@ -250,42 +282,6 @@ var ProductTable = /** @class */ (function() {
       });
     });
   };
-  // Delete a Product
-  ProductTable.prototype.delete = function(pid) {
-    return __awaiter(this, void 0, void 0, function() {
-      var _this = this;
-      return __generator(this, function(_a) {
-        return [
-          2 /*return*/,
-          (0, Wrappers_1.tryCatchWrap)(
-            'Coult not Delete Product with ID : '.concat(pid),
-            function() {
-              return __awaiter(_this, void 0, void 0, function() {
-                var sql, result;
-                return __generator(this, function(_a) {
-                  switch (_a.label) {
-                    case 0:
-                      sql =
-                        'DELETE FROM products\n                     WHERE id = '.concat(
-                          pid,
-                          '\n                     RETURNING *'
-                        );
-                      return [
-                        4 /*yield*/,
-                        (0, helpers_1.connectQuery)(sql, db_1.client)
-                      ];
-                    case 1:
-                      result = _a.sent();
-                      return [2 /*return*/, result.rows];
-                  }
-                });
-              });
-            }
-          )
-        ];
-      });
-    });
-  };
-  return ProductTable;
+  return OrderTable;
 })();
-exports.ProductTable = ProductTable;
+exports.OrderTable = OrderTable;
