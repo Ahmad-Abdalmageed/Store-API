@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.search = exports.erase = exports.create = exports.index = void 0;
 var User_1 = require("../Models/User");
 var Wrappers_1 = require("../Middleware/Wrappers");
+var apiError_1 = require("../Errors/apiError");
 var users = new User_1.UserTable();
 // Return All Users Route Controller
 var index = (0, Wrappers_1.tryCatchWrapExpress)(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -73,25 +74,35 @@ var create = (0, Wrappers_1.tryCatchWrapExpress)(function (req, res) { return __
     });
 }); });
 exports.create = create;
-var search = (0, Wrappers_1.tryCatchWrapExpress)(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+var search = (0, Wrappers_1.tryCatchWrapExpress)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var results;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, users.getUser(Number(req.params.uid))];
             case 1:
                 results = _a.sent();
+                // No User found with ID
+                if (!results)
+                    return [2 /*return*/, next(new apiError_1.apiError(404, 'User could not be found'))];
                 res.status(200).json(results);
                 return [2 /*return*/];
         }
     });
 }); });
 exports.search = search;
-var erase = (0, Wrappers_1.tryCatchWrapExpress)(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var results;
+var erase = (0, Wrappers_1.tryCatchWrapExpress)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var uid, foundUser, results;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, users.delUser(Number(req.params.uid))];
+            case 0:
+                uid = Number(req.params.uid);
+                return [4 /*yield*/, users.getUser(uid)];
             case 1:
+                foundUser = _a.sent();
+                if (!foundUser)
+                    return [2 /*return*/, next(new apiError_1.apiError(404, "User with ID: ".concat(uid, " is not Found")))];
+                return [4 /*yield*/, users.delUser(uid)];
+            case 2:
                 results = _a.sent();
                 res.status(200).json(results);
                 return [2 /*return*/];
