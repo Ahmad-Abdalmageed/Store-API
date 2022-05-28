@@ -1,15 +1,26 @@
-import express, { Request, Response } from 'express';
-import bodyParser from 'body-parser';
-
+import express from 'express';
+import dotenv from 'dotenv';
+import { usersRouter } from './Handlers/Users';
+dotenv.config();
 const app: express.Application = express();
-const address: string = '0.0.0.0:3000';
 
-app.use(bodyParser.json());
+// Routes & Middlewares
+app.use(express.json());
 
-app.get('/', function (req: Request, res: Response) {
-  res.send('Hello World!');
-});
+app.use('/api/v1/store/users', usersRouter);
 
-app.listen(3000, function () {
-  console.log(`starting app on: ${address}`);
-});
+// Server
+const startServer = (PORT: number) => {
+  try {
+    app.listen(PORT, () => {
+      console.log(`Server Started on PORT ${PORT}`);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+startServer(Number(process.env.PORT) || 3000);
+
+// For Testing Purposes
+export { app };
