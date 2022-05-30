@@ -2,17 +2,20 @@ import express from 'express';
 import { usersRouter } from './Handlers/Users';
 import { prodRouter } from './Handlers/Products';
 import { errorHandler } from './Middleware/errorHandler';
-import dotenv from 'dotenv';
 import { orderRouter } from './Handlers/Orders';
+import { authenticate } from './Middleware/auth';
+import dotenv from 'dotenv';
+
 dotenv.config();
+
 const app: express.Application = express();
 
 // Routes & Middlewares
 app.use(express.json());
 
-app.use('/api/v1/store/users', usersRouter);
+app.use('/api/v1/store/users', authenticate, usersRouter);
+app.use('/api/v1/store/orders', authenticate, orderRouter);
 app.use('/api/v1/store/products', prodRouter);
-app.use('/api/v1/store/orders', orderRouter);
 
 app.use(errorHandler);
 // Server

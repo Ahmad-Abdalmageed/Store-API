@@ -10,6 +10,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const users = new UserTable();
+const tokenSecret = process.env.TOKEN_SECRET as unknown as Secret;
 
 // Return All Users Route Controller
 const index = tryCatchWrapExpress(
@@ -57,14 +58,13 @@ const erase = tryCatchWrapExpress(
     res.status(200).json(results);
   }
 );
-const uAuthin = tryCatchWrapExpress(
+const signIn = tryCatchWrapExpress(
   async (req: Request, res: Response, next: NextFunction) => {
     const user = {
       username: req.body.uname,
       pass: req.body.pass
     };
     const authenticated = await users.auth(user.username, user.pass);
-    const tokenSecret = process.env.TOKEN_SECRET as unknown as Secret;
     const user_token = jwt.sign({ user: authenticated }, tokenSecret);
 
     if (!authenticated)
@@ -72,4 +72,4 @@ const uAuthin = tryCatchWrapExpress(
     res.status(200).json(user_token);
   }
 );
-export { index, create, erase, search, uAuthin };
+export { index, create, erase, search, signIn };
