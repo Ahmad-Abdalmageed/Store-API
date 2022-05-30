@@ -8,16 +8,17 @@ var express_1 = __importDefault(require('express'));
 var Users_1 = require('./Handlers/Users');
 var Products_1 = require('./Handlers/Products');
 var errorHandler_1 = require('./Middleware/errorHandler');
-var dotenv_1 = __importDefault(require('dotenv'));
 var Orders_1 = require('./Handlers/Orders');
+var auth_1 = require('./Middleware/auth');
+var dotenv_1 = __importDefault(require('dotenv'));
 dotenv_1.default.config();
 var app = (0, express_1.default)();
 exports.app = app;
 // Routes & Middlewares
 app.use(express_1.default.json());
-app.use('/api/v1/store/users', Users_1.usersRouter);
+app.use('/api/v1/store/users', auth_1.authenticate, Users_1.usersRouter);
+app.use('/api/v1/store/orders', auth_1.authenticate, Orders_1.orderRouter);
 app.use('/api/v1/store/products', Products_1.prodRouter);
-app.use('/api/v1/store/orders', Orders_1.orderRouter);
 app.use(errorHandler_1.errorHandler);
 // Server
 var startServer = function(PORT) {

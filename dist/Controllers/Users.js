@@ -111,7 +111,7 @@ var __importDefault = (this && this.__importDefault) || function(mod) {
   return (mod && mod.__esModule) ? mod : { 'default': mod };
 };
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.uAuthin = exports.search = exports.erase = exports.create = exports.index = void 0;
+exports.signIn = exports.search = exports.erase = exports.create = exports.index = void 0;
 var User_1 = require('../Models/User');
 var Wrappers_1 = require('../Middleware/Wrappers');
 var apiError_1 = require('../Errors/apiError');
@@ -120,6 +120,7 @@ var jsonwebtoken_1 = __importDefault(require('jsonwebtoken'));
 var dotenv_1 = __importDefault(require('dotenv'));
 dotenv_1.default.config();
 var users = new User_1.UserTable();
+var tokenSecret = process.env.TOKEN_SECRET;
 // Return All Users Route Controller
 var index = (0, Wrappers_1.tryCatchWrapExpress)(function(req, res, next) {
   return __awaiter(void 0, void 0, void 0, function() {
@@ -208,9 +209,9 @@ var erase = (0, Wrappers_1.tryCatchWrapExpress)(function(req, res, next) {
   });
 });
 exports.erase = erase;
-var uAuthin = (0, Wrappers_1.tryCatchWrapExpress)(function(req, res, next) {
+var signIn = (0, Wrappers_1.tryCatchWrapExpress)(function(req, res, next) {
   return __awaiter(void 0, void 0, void 0, function() {
-    var user, authenticated, tokenSecret, user_token;
+    var user, authenticated, user_token;
     return __generator(this, function(_a) {
       switch (_a.label) {
         case 0:
@@ -221,7 +222,6 @@ var uAuthin = (0, Wrappers_1.tryCatchWrapExpress)(function(req, res, next) {
           return [4 /*yield*/, users.auth(user.username, user.pass)];
         case 1:
           authenticated = _a.sent();
-          tokenSecret = process.env.TOKEN_SECRET;
           user_token = jsonwebtoken_1.default.sign({ user: authenticated }, tokenSecret);
           if (!authenticated)
             return [2 /*return*/, next(new apiError_1.apiError(401, 'username/password are not correct'))];
@@ -231,4 +231,4 @@ var uAuthin = (0, Wrappers_1.tryCatchWrapExpress)(function(req, res, next) {
     });
   });
 });
-exports.uAuthin = uAuthin;
+exports.signIn = signIn;

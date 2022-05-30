@@ -9,6 +9,6 @@ var Users_1 = require('../Controllers/Users');
 var usersRouter = express_1.default.Router();
 exports.usersRouter = usersRouter;
 // Users Routes
-usersRouter.route('/auth/').get(Users_1.uAuthin);
+usersRouter.route('/login/').get(Users_1.signIn);
 usersRouter.route('/:uid').get(Users_1.search).delete(Users_1.erase);
 usersRouter.route('/').get(Users_1.index).post(Users_1.create);
