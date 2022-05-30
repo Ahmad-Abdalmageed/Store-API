@@ -1,10 +1,12 @@
 import { client } from '../db';
 import { tryCatchWrap } from '../Middleware/Wrappers';
 import { connectQuery } from './helpers';
+import bcrypt from 'bcrypt';
 
 // USERS Table Schema
 export type User = {
   id?: number;
+  UserName: string;
   FirstName: string;
   LastName: string;
   password: string;
@@ -22,8 +24,8 @@ export class UserTable {
   //  Adds a User to the Table
   async create(user: User): Promise<User> {
     return tryCatchWrap('Cannot Add User', async () => {
-      const sql = `INSERT INTO users (firstname, lastname, password)
-                   VALUES ('${user.FirstName}','${user.LastName}','${user.password}')
+      const sql = `INSERT INTO users (username, firstname, lastname, password)
+                   VALUES ('${user.UserName}', '${user.FirstName}', '${user.LastName}', '${user.password}')
                    RETURNING *`;
       const results = await connectQuery(sql, client);
       return results.rows[0];
@@ -44,12 +46,31 @@ export class UserTable {
     return tryCatchWrap(
       `Could Not delete User with ID: ${userID}`,
       async () => {
-        const sql = `DELETE FROM users 
-                   WHERE id = ${userID}
-                   RETURNING *`;
+        const sql = `DELETE
+                     FROM users
+                     WHERE id = ${userID}
+                     RETURNING *`;
         const results = await connectQuery(sql, client);
         return results.rows;
       }
     );
+  }
+
+  // Authenticate User
+  async auth(uname: string, password: string): Promise<User | null> {
+    return tryCatchWrap('User cannot be Authenticated', async () => {
+      const sql = `SELECT *
+                   FROM users
+                   WHERE users.username = '${uname}'`;
+      const result = await connectQuery(sql, client);
+
+      const authenticated = bcrypt.compareSync(
+        password + process.env.BCRYPT_PASSWORD,
+        result.rows[0].password
+      );
+
+      if (authenticated) return result.rows[0];
+      return null;
+    });
   }
 }

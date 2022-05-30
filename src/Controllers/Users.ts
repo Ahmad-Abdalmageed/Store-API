@@ -2,6 +2,12 @@ import { NextFunction, Request, Response } from 'express';
 import { UserTable, User } from '../Models/User';
 import { tryCatchWrapExpress } from '../Middleware/Wrappers';
 import { apiError } from '../Errors/apiError';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { Secret } from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const users = new UserTable();
 
@@ -16,13 +22,20 @@ const index = tryCatchWrapExpress(
 );
 // Create new User
 const create = tryCatchWrapExpress(async (req: Request, res: Response) => {
+  const passHash = bcrypt.hashSync(
+    req.body.pass + process.env.BCRYPT_PASSWORD,
+    Number(process.env.SALT_ROUNDS)
+  );
   const newUser: User = {
+    UserName: req.body.uname,
     FirstName: req.body.fname,
     LastName: req.body.lname,
-    password: req.body.pass
+    password: passHash
   };
   const results = await users.create(newUser);
-  res.status(200).json(results);
+  const tokenSecret = process.env.TOKEN_SECRET as unknown as Secret;
+  const user_token = jwt.sign({ user: results }, tokenSecret);
+  res.status(200).json(user_token);
 });
 // Search with User ID
 const search = tryCatchWrapExpress(
@@ -44,5 +57,19 @@ const erase = tryCatchWrapExpress(
     res.status(200).json(results);
   }
 );
+const uAuthin = tryCatchWrapExpress(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const user = {
+      username: req.body.uname,
+      pass: req.body.pass
+    };
+    const authenticated = await users.auth(user.username, user.pass);
+    const tokenSecret = process.env.TOKEN_SECRET as unknown as Secret;
+    const user_token = jwt.sign({ user: authenticated }, tokenSecret);
 
-export { index, create, erase, search };
+    if (!authenticated)
+      return next(new apiError(401, 'username/password are not correct'));
+    res.status(200).json(user_token);
+  }
+);
+export { index, create, erase, search, uAuthin };
