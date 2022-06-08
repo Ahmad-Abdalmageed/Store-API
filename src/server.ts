@@ -4,6 +4,7 @@ import { prodRouter } from './Handlers/Products';
 import { errorHandler } from './Middleware/errorHandler';
 import { orderRouter } from './Handlers/Orders';
 import { authenticate } from './Middleware/auth';
+import { notFound } from './Middleware/notFound';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -17,6 +18,7 @@ app.use('/api/v1/store/users', authenticate, usersRouter);
 app.use('/api/v1/store/orders', authenticate, orderRouter);
 app.use('/api/v1/store/products', prodRouter);
 
+app.use(notFound);
 app.use(errorHandler);
 // Server
 const startServer = (PORT: number) => {
