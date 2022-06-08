@@ -10,6 +10,7 @@ var Products_1 = require('./Handlers/Products');
 var errorHandler_1 = require('./Middleware/errorHandler');
 var Orders_1 = require('./Handlers/Orders');
 var auth_1 = require('./Middleware/auth');
+var notFound_1 = require('./Middleware/notFound');
 var dotenv_1 = __importDefault(require('dotenv'));
 dotenv_1.default.config();
 var app = (0, express_1.default)();
@@ -19,6 +20,7 @@ app.use(express_1.default.json());
 app.use('/api/v1/store/users', auth_1.authenticate, Users_1.usersRouter);
 app.use('/api/v1/store/orders', auth_1.authenticate, Orders_1.orderRouter);
 app.use('/api/v1/store/products', Products_1.prodRouter);
+app.use(notFound_1.notFound);
 app.use(errorHandler_1.errorHandler);
 // Server
 var startServer = function(PORT) {

@@ -12,12 +12,11 @@ function authenticate(req, res, next) {
   try {
     var token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
     var secret = process.env.TOKEN_SECRET;
-    jsonwebtoken_1.default.verify(token, secret);
-    console.log('Here');
+    var decoded = jsonwebtoken_1.default.verify(token, secret);
+    res.locals.userID = decoded.user.id;
     next();
   } catch (e) {
     return next(new apiError_1.apiError(401, 'Could not Authenticate User'));
   }
 }
-
 exports.authenticate = authenticate;

@@ -108,7 +108,7 @@ var __generator = (this && this.__generator) || function(thisArg, body) {
   }
 };
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.search = exports.erase = exports.create = exports.index = void 0;
+exports.getUserOrders = exports.search = exports.erase = exports.create = exports.index = void 0;
 var Order_1 = require('../Models/Order');
 var Wrappers_1 = require('../Middleware/Wrappers');
 var apiError_1 = require('../Errors/apiError');
@@ -144,7 +144,7 @@ var create = (0, Wrappers_1.tryCatchWrapExpress)(function(req, res) {
             status: req.body.os,
             date: req.body.date
           };
-          return [4 /*yield*/, orders.create(newOrder)];
+          return [4 /*yield*/, orders.create(newOrder, req.body.pid, req.body.quantity)];
         case 1:
           results = _a.sent();
           res.status(200).json(results);
@@ -196,3 +196,23 @@ var search = (0, Wrappers_1.tryCatchWrapExpress)(function(req, res, next) {
   });
 });
 exports.search = search;
+// Get User's Current Orders
+var getUserOrders = (0, Wrappers_1.tryCatchWrapExpress)(function(req, res, next) {
+  return __awaiter(void 0, void 0, void 0, function() {
+    var uid, foundOrders;
+    return __generator(this, function(_a) {
+      switch (_a.label) {
+        case 0:
+          uid = Number(req.params.uid);
+          return [4 /*yield*/, orders.getOrder(uid)];
+        case 1:
+          foundOrders = _a.sent();
+          if (!foundOrders)
+            return [2 /*return*/, next(new apiError_1.apiError(404, 'Could Not Get User\'s Orders '))];
+          res.status(200).json(foundOrders);
+          return [2 /*return*/];
+      }
+    });
+  });
+});
+exports.getUserOrders = getUserOrders;

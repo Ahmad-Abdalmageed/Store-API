@@ -121,13 +121,14 @@ var OrderTable = /** @class */ (function() {
     return __awaiter(this, void 0, void 0, function() {
       var _this = this;
       return __generator(this, function(_a) {
-        return [2 /*return*/, (0, Wrappers_1.tryCatchWrap)('Could Not Get All Oders', function() {
+        return [2 /*return*/, (0, Wrappers_1.tryCatchWrap)('Could Not Get All Orders', function() {
           return __awaiter(_this, void 0, void 0, function() {
-            var results;
+            var sql, results;
             return __generator(this, function(_a) {
               switch (_a.label) {
                 case 0:
-                  return [4 /*yield*/, (0, helpers_1.connectQuery)('SELECT * FROM orders', db_1.client)];
+                  sql = 'SELECT users.firstname,\n                          users.lastname,\n                          users.id  as uid,\n                          products.name,\n                          products.price,\n                          products.category,\n                          orders.status,\n                          orders.date,\n                          orders.id AS oid,\n                          quantity\n                   FROM orders\n                            JOIN order_product ON orders.id = order_product.order_id\n                            JOIN products ON products.id = order_product.prod_id\n                            JOIN users ON orders.user_id = users.id';
+                  return [4 /*yield*/, (0, helpers_1.connectQuery)(sql, db_1.client)];
                 case 1:
                   results = _a.sent();
                   return [2 /*return*/, results.rows];
@@ -139,20 +140,30 @@ var OrderTable = /** @class */ (function() {
     });
   };
   // Create a New Order
-  OrderTable.prototype.create = function(order) {
+  OrderTable.prototype.create = function(order, pid, q) {
     return __awaiter(this, void 0, void 0, function() {
       var _this = this;
       return __generator(this, function(_a) {
         return [2 /*return*/, (0, Wrappers_1.tryCatchWrap)('Could not Create Order', function() {
           return __awaiter(_this, void 0, void 0, function() {
-            var sql, results;
+            var sql_order, results_order, oid, sql_db, sql_show, results;
             return __generator(this, function(_a) {
               switch (_a.label) {
                 case 0:
-                  sql = 'INSERT INTO orders(user_id, status, date)\n                 VALUES (\''.concat(order.uid, '\',\'').concat(order.status, '\',\'').concat(order.date, '\')\n                 RETURNING *');
-                  return [4 /*yield*/, (0, helpers_1.connectQuery)(sql, db_1.client)];
+                  sql_order = 'INSERT INTO orders(user_id, status, date)\n                         VALUES (\''.concat(order.uid, '\', \'').concat(order.status, '\', \'').concat(order.date, '\')\n                         RETURNING *');
+                  return [4 /*yield*/, (0, helpers_1.connectQuery)(sql_order, db_1.client)];
                 case 1:
+                  results_order = _a.sent();
+                  oid = results_order.rows[0].id;
+                  sql_db = 'INSERT INTO order_product(order_id, prod_id, quantity)\n                      VALUES (\''.concat(oid, '\', \'').concat(pid, '\', \'').concat(q, '\')\n                      RETURNING *');
+                  return [4 /*yield*/, (0, helpers_1.connectQuery)(sql_db, db_1.client)];
+                case 2:
+                  _a.sent();
+                  sql_show = 'SELECT users.firstname,\n                               users.lastname,\n                               products.name,\n                               products.price,\n                               products.category,\n                               orders.status,\n                               orders.date,\n                               orders.id,\n                               quantity\n                        FROM orders\n                                 JOIN order_product ON orders.id = order_product.order_id\n                                 JOIN products ON products.id = order_product.prod_id\n                                 JOIN users ON orders.user_id = users.id';
+                  return [4 /*yield*/, (0, helpers_1.connectQuery)(sql_show, db_1.client)];
+                case 3:
                   results = _a.sent();
+                  console.log(results.rows);
                   return [2 /*return*/, results.rows[0]];
               }
             });
@@ -184,7 +195,7 @@ var OrderTable = /** @class */ (function() {
       });
     });
   };
-  // Search a Product by ID
+  // Search an Order by ID
   OrderTable.prototype.search = function(oid) {
     return __awaiter(this, void 0, void 0, function() {
       var _this = this;
@@ -195,11 +206,34 @@ var OrderTable = /** @class */ (function() {
             return __generator(this, function(_a) {
               switch (_a.label) {
                 case 0:
-                  sql = 'SELECT * FROM orders WHERE id = '.concat(oid);
+                  sql = 'SELECT users.firstname,\n                          users.lastname,\n                          products.name,\n                          products.price,\n                          products.category,\n                          orders.status,\n                          orders.date,\n                          quantity\n                   FROM orders\n                            JOIN order_product ON orders.id = order_product.order_id\n                            JOIN products ON products.id = order_product.prod_id\n                            JOIN users ON orders.user_id = users.id\n                   WHERE orders.id = '.concat(oid);
                   return [4 /*yield*/, (0, helpers_1.connectQuery)(sql, db_1.client)];
                 case 1:
                   results = _a.sent();
                   return [2 /*return*/, results.rows[0]];
+              }
+            });
+          });
+        })];
+      });
+    });
+  };
+  // Get Order by Current User
+  OrderTable.prototype.getOrder = function(uid) {
+    return __awaiter(this, void 0, void 0, function() {
+      var _this = this;
+      return __generator(this, function(_a) {
+        return [2 /*return*/, (0, Wrappers_1.tryCatchWrap)('Could Not get Orders for User', function() {
+          return __awaiter(_this, void 0, void 0, function() {
+            var sql, results;
+            return __generator(this, function(_a) {
+              switch (_a.label) {
+                case 0:
+                  sql = 'SELECT users.firstname,\n                          users.lastname,\n                          users.id as uid,\n                          products.name,\n                          products.price,\n                          products.category,\n                          orders.status,\n                          orders.date,\n                          quantity\n                   FROM orders\n                            JOIN order_product ON orders.id = order_product.order_id\n                            JOIN products ON products.id = order_product.prod_id\n                            JOIN users ON orders.user_id = users.id\n                   WHERE users.id = '.concat(uid);
+                  return [4 /*yield*/, (0, helpers_1.connectQuery)(sql, db_1.client)];
+                case 1:
+                  results = _a.sent();
+                  return [2 /*return*/, results.rows];
               }
             });
           });
