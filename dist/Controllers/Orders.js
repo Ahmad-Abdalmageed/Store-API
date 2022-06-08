@@ -207,8 +207,8 @@ var getUserOrders = (0, Wrappers_1.tryCatchWrapExpress)(function(req, res, next)
           return [4 /*yield*/, orders.getOrder(uid)];
         case 1:
           foundOrders = _a.sent();
-          if (!foundOrders)
-            return [2 /*return*/, next(new apiError_1.apiError(404, 'Could Not Get User\'s Orders '))];
+          if (!foundOrders || foundOrders.length == 0)
+            return [2 /*return*/, next(new apiError_1.apiError(404, 'No Orders Found '))];
           res.status(200).json(foundOrders);
           return [2 /*return*/];
       }

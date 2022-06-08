@@ -17,7 +17,7 @@ var app = (0, express_1.default)();
 exports.app = app;
 // Routes & Middlewares
 app.use(express_1.default.json());
-app.use('/api/v1/store/users', auth_1.authenticate, Users_1.usersRouter);
+app.use('/api/v1/store/users', Users_1.usersRouter);
 app.use('/api/v1/store/orders', auth_1.authenticate, Orders_1.orderRouter);
 app.use('/api/v1/store/products', Products_1.prodRouter);
 app.use(notFound_1.notFound);

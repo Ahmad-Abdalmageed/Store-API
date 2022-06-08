@@ -6,9 +6,10 @@ Object.defineProperty(exports, '__esModule', { value: true });
 exports.usersRouter = void 0;
 var express_1 = __importDefault(require('express'));
 var Users_1 = require('../Controllers/Users');
+var auth_1 = require('../Middleware/auth');
 var usersRouter = express_1.default.Router();
 exports.usersRouter = usersRouter;
 // Users Routes
 usersRouter.route('/login/').get(Users_1.signIn);
-usersRouter.route('/:uid').get(Users_1.search).delete(Users_1.erase);
-usersRouter.route('/').get(Users_1.index).post(Users_1.create);
+usersRouter.route('/:uid').get(Users_1.search).delete(auth_1.authenticate, Users_1.erase);
+usersRouter.route('/').get(auth_1.authenticate, Users_1.index).post(Users_1.create);
