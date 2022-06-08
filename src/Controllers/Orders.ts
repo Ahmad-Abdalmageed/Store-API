@@ -53,8 +53,8 @@ const getUserOrders = tryCatchWrapExpress(
   async (req: Request, res: Response, next: NextFunction) => {
     const uid = Number(req.params.uid);
     const foundOrders = await orders.getOrder(uid);
-    if (!foundOrders)
-      return next(new apiError(404, `Could Not Get User's Orders `));
+    if (!foundOrders || foundOrders.length == 0)
+      return next(new apiError(404, `No Orders Found `));
     res.status(200).json(foundOrders);
   }
 );
