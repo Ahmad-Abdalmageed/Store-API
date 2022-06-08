@@ -21,7 +21,11 @@ const create = tryCatchWrapExpress(async (req: Request, res: Response) => {
     status: req.body.os,
     date: req.body.date
   };
-  const results = await orders.create(newOrder);
+  const results = await orders.create(
+    newOrder,
+    req.body.pid,
+    req.body.quantity
+  );
   res.status(200).json(results);
 });
 // Delete Order Using ID
@@ -44,4 +48,14 @@ const search = tryCatchWrapExpress(
     res.status(200).json(foundID);
   }
 );
-export { index, create, erase, search };
+// Get User's Current Orders
+const getUserOrders = tryCatchWrapExpress(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const uid = Number(req.params.uid);
+    const foundOrders = await orders.getOrder(uid);
+    if (!foundOrders)
+      return next(new apiError(404, `Could Not Get User's Orders `));
+    res.status(200).json(foundOrders);
+  }
+);
+export { index, create, erase, search, getUserOrders };
