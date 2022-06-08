@@ -1,42 +1,122 @@
-# API Requirements
-The company stakeholders want to create an online storefront to showcase their great product ideas. Users need to be able to browse an index of all products, see the specifics of a single product, and add products to an order that they can view in a cart page. You have been tasked with building the API that will support this application, and your coworker is building the frontend.
-
-These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
-
 ## API Endpoints
-#### Products
-- Index 
+
+## Products
+
+- Index
+
+```http
+  GET '/api/v1/store/products/'
+```
+
 - Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
 
-#### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+```http
+  GET '/api/v1/store/products/:pid'
+```
 
-#### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- Create : Authentication Added
+
+```http
+  POST '/api/v1/store/products/'
+```
+
+- Delete
+
+```http
+  DELETE '/api/v1/store/products/:pid'
+```
+
+## Users
+
+- Index: including Authentication
+
+```http
+  GET '/api/v1/store/users'
+```
+
+- Show
+
+```http
+  GET '/api/v1/store/users/:uid'
+```
+
+- Create
+
+```http
+  POST '/api/v1/store/users/'
+```
+
+- Delete
+
+```http
+  DELETE '/api/v1/store/users/:uid'
+```
+
+- Sign In
+
+```http
+  GET '/api/v1/store/users/login'
+```
+
+## Orders
+
+All Routes include Authentication
+
+- Index
+
+```http
+  GET '/api/v1/store/orders/'
+```
+
+- Show
+
+```http
+  GET '/api/v1/store/orders/:oid'
+```
+
+- Create
+
+```http
+  POST '/api/v1/store/orders/'
+```
+
+- Delete
+
+```http
+  DELETE '/api/v1/store/orders/:oid'
+```
+
+- Current Orders by User
+
+```http
+  GET '/api/v1/store/orders/users/:uid'
+```
 
 ## Data Shapes
+
 #### Product
--  id
-- name
-- price
-- [OPTIONAL] category
+
+TABLE Products
+(
+id SERIAL NOT NULL, name VARCHAR(100) NOT NULL, price INTEGER NOT NULL, category VARCHAR(100) NULL
+);
 
 #### User
-- id
-- firstName
-- lastName
-- password
 
+TABLE Users(
+id SERIAL NOT NULL, username VARCHAR(30) NOT NULL, firstname VARCHAR(20) NOT NULL, lastname VARCHAR(20) NOT NULL,
+password VARCHAR NOT NULL
+);
 #### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
 
+TABLE Orders
+(
+id SERIAL NOT NULL, user_id INTEGER NOT NULL, status VARCHAR(20) NOT NULL, date DATE NOT NULL
+);
+
+TABLE order_product
+(
+id SERIAL NOT NULL, order_id INTEGER NOT NULL, prod_id INTEGER NOT NULL, quantity INTEGER NOT NULL
+);
+
+<img height="400" src="/home/ahmad-lap/Projects/BackEnd ND/Store-API/imgs/schema.png"/>
