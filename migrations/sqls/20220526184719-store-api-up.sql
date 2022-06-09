@@ -26,7 +26,7 @@ CREATE TABLE Orders
     id      SERIAL      NOT NULL,
     user_id INTEGER     NOT NULL,
     status  VARCHAR(20) NOT NULL,
-    date    DATE        NOT NULL
+    date TIMESTAMP NOT NULL
 );
 ALTER TABLE Orders
     ADD CONSTRAINT "ORDERS_PK"
