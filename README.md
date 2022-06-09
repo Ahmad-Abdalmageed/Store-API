@@ -124,4 +124,4 @@ TABLE order_product
 (
 id SERIAL NOT NULL, order_id INTEGER NOT NULL, prod_id INTEGER NOT NULL, quantity INTEGER NOT NULL
 );
-<img height="400" src="/home/ahmad-lap/Projects/BackEnd ND/Store-API/imgs/schema.png"/>
+<img height="400" src="./imgs/schema.png"/>
