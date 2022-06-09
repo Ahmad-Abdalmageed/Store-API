@@ -32,7 +32,7 @@ export class OrderTable {
     });
   }
   // Create a New Order
-  async create(order: Order, pid: number, q: number): Promise<Order> {
+  async create(order: Order, pid: number, q: number) {
     return tryCatchWrap('Could not Create Order', async () => {
       const sql_order = `INSERT INTO orders(user_id, status, date)
                          VALUES ('${order.uid}', '${order.status}', '${order.date}')
@@ -60,7 +60,6 @@ export class OrderTable {
                                  JOIN products ON products.id = order_product.prod_id
                                  JOIN users ON orders.user_id = users.id`;
       const results = await connectQuery(sql_show, client);
-      console.log(results.rows);
       return results.rows[0];
     });
   }
@@ -78,6 +77,7 @@ export class OrderTable {
     return tryCatchWrap(`Could not Find Order with ID: ${oid}`, async () => {
       const sql = `SELECT users.firstname,
                           users.lastname,
+                          users.id as uid,
                           products.name,
                           products.price,
                           products.category,
