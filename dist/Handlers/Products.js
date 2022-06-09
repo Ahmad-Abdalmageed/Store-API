@@ -1,12 +1,12 @@
-'use strict';
-var __importDefault = (this && this.__importDefault) || function(mod) {
-    return (mod && mod.__esModule) ? mod : { 'default': mod };
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, '__esModule', { value: true });
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.prodRouter = void 0;
-var express_1 = __importDefault(require('express'));
-var Products_1 = require('../Controllers/Products');
-var auth_1 = require('../Middleware/auth');
+var express_1 = __importDefault(require("express"));
+var Products_1 = require("../Controllers/Products");
+var auth_1 = require("../Middleware/auth");
 var prodRouter = express_1.default.Router();
 exports.prodRouter = prodRouter;
 // Products Routes
