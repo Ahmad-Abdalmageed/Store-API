@@ -8,9 +8,12 @@ const orders = new OrderTable();
 // Return ALl Orders
 const index = tryCatchWrapExpress(
   async (req: Request, res: Response, next: NextFunction) => {
+    if (req.headers.authorization?.split(' ')[1] !== 'Admin')
+      return next(new apiError(401, 'Bad Authentication'));
+
     const results = await orders.listAll();
     if (!results || results.length == 0)
-      return next(new apiError(404, 'No Orders Found'));
+      return next(new apiError(204, 'No Orders Found'));
     res.status(200).json(results);
   }
 );
@@ -33,8 +36,10 @@ const erase = tryCatchWrapExpress(
   async (req: Request, res: Response, next: NextFunction) => {
     const oid = Number(req.params.oid);
     const foundID = await orders.search(oid);
+    if (foundID.uid !== res.locals.uid)
+      return next(new apiError(401, 'Bad Authentication'));
     if (!foundID)
-      return next(new apiError(404, `Order with ID: ${oid} is not found`));
+      return next(new apiError(204, `Order with ID: ${oid} is not found`));
     const results = await orders.delete(oid);
     res.status(200).json(results);
   }
@@ -44,7 +49,13 @@ const search = tryCatchWrapExpress(
     const oid = Number(req.params.oid);
     const foundID = await orders.search(oid);
     if (!foundID)
-      return next(new apiError(404, `Order with ID: ${oid} is not found`));
+      return next(new apiError(204, `Order with ID: ${oid} is not found`));
+    if (
+      req.headers.authorization?.split(' ')[1] !== 'Admin' &&
+      foundID.uid !== res.locals.uid
+    ) {
+      return next(new apiError(401, 'Bad Authentication'));
+    }
     res.status(200).json(foundID);
   }
 );
@@ -53,8 +64,13 @@ const getUserOrders = tryCatchWrapExpress(
   async (req: Request, res: Response, next: NextFunction) => {
     const uid = Number(req.params.uid);
     const foundOrders = await orders.getOrder(uid);
+    if (
+      req.headers.authorization?.split(' ')[1] !== 'Admin' &&
+      uid !== res.locals.uid
+    )
+      return next(new apiError(401, 'Bad Authentication'));
     if (!foundOrders || foundOrders.length == 0)
-      return next(new apiError(404, `No Orders Found `));
+      return next(new apiError(204, `No Orders Found `));
     res.status(200).json(foundOrders);
   }
 );
