@@ -9,11 +9,12 @@ const products = new ProductTable();
 const index = tryCatchWrapExpress(
   async (req: Request, res: Response, next: NextFunction) => {
     const results = await products.listAll();
-    if (!results) return next(new apiError(404, 'No Products Found'));
+    if (!results || results.length == 0)
+      return next(new apiError(204, 'No Products Found'));
     res.status(200).send(results);
   }
 );
-// Create a New Product TODO : Add Authorization
+// Create a New Product
 const create = tryCatchWrapExpress(async (req: Request, res: Response) => {
   const newProd: Product = {
     name: req.body.name,
@@ -23,13 +24,13 @@ const create = tryCatchWrapExpress(async (req: Request, res: Response) => {
   const results = await products.create(newProd);
   res.status(200).send(results);
 });
-// Delete a Product TODO : Add Authorization
+// Delete a Product
 const erase = tryCatchWrapExpress(
   async (req: Request, res: Response, next: NextFunction) => {
     const pid = Number(req.params.pid);
     const foundProd = await products.getProduct(pid);
     if (!foundProd)
-      return next(new apiError(404, `Product with ID: ${pid} is not Found`));
+      return next(new apiError(204, `Product with ID: ${pid} is not Found`));
     const results = await products.delete(pid);
     res.status(200).send(results);
   }
@@ -40,7 +41,7 @@ const search = tryCatchWrapExpress(
     const pid = Number(req.params.pid);
     const foundProd = await products.getProduct(pid);
     if (!foundProd)
-      return next(new apiError(404, `Product with ID: ${pid} is not Found`));
+      return next(new apiError(204, `Product with ID: ${pid} is not Found`));
     res.status(200).json(foundProd);
   }
 );
