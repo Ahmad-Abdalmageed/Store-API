@@ -20,7 +20,7 @@ export class ProductTable {
     });
   }
   // Get a Single Product by an ID
-  async getProduct(pid: number): Promise<Product[]> {
+  async getProduct(pid: number): Promise<Product> {
     return tryCatchWrap(`Could not Get Product with ID ${pid}`, async () => {
       const sql = `SELECT * FROM products WHERE id = ${pid}`;
       const result = await connectQuery(sql, client);
@@ -34,7 +34,7 @@ export class ProductTable {
                    VALUES ('${product.name}','${product.price}','${product.category}')
                    RETURNING *`;
       const result = await connectQuery(sql, client);
-      return result.rows;
+      return result.rows[0];
     });
   }
   // Delete a Product
@@ -46,7 +46,7 @@ export class ProductTable {
                      WHERE id = ${pid}
                      RETURNING *`;
         const result = await connectQuery(sql, client);
-        return result.rows;
+        return result.rows[0];
       }
     );
   }
