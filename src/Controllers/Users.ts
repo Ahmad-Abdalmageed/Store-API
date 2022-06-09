@@ -17,7 +17,7 @@ const index = tryCatchWrapExpress(
   async (req: Request, res: Response, next: NextFunction) => {
     const results = await users.listAll();
     if (!results || results.length == 0)
-      return next(new apiError(404, 'No Users Found'));
+      return next(new apiError(204, 'No Users Found'));
     res.status(200).json(results);
   }
 );
@@ -28,9 +28,9 @@ const create = tryCatchWrapExpress(async (req: Request, res: Response) => {
     Number(process.env.SALT_ROUNDS)
   );
   const newUser: User = {
-    UserName: req.body.uname,
-    FirstName: req.body.fname,
-    LastName: req.body.lname,
+    username: req.body.uname,
+    firstname: req.body.fname,
+    lastname: req.body.lname,
     password: passHash
   };
   const results = await users.create(newUser);
@@ -43,7 +43,7 @@ const search = tryCatchWrapExpress(
   async (req: Request, res: Response, next: NextFunction) => {
     const results = await users.getUser(Number(req.params.uid));
     // No User found with ID
-    if (!results) return next(new apiError(404, 'User could not be found'));
+    if (!results) return next(new apiError(204, 'User could not be found'));
     res.status(200).json(results);
   }
 );
@@ -53,7 +53,7 @@ const erase = tryCatchWrapExpress(
     const uid = Number(req.params.uid);
     const foundUser = await users.getUser(uid);
     if (!foundUser)
-      return next(new apiError(404, `User with ID: ${uid} is not Found`));
+      return next(new apiError(204, `User with ID: ${uid} is not Found`));
     const results = await users.delUser(uid);
     res.status(200).json(results);
   }
