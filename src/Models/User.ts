@@ -6,9 +6,9 @@ import bcrypt from 'bcrypt';
 // USERS Table Schema
 export type User = {
   id?: number;
-  UserName: string;
-  FirstName: string;
-  LastName: string;
+  username: string;
+  firstname: string;
+  lastname: string;
   password: string;
 };
 
@@ -25,7 +25,7 @@ export class UserTable {
   async create(user: User): Promise<User> {
     return tryCatchWrap('Cannot Add User', async () => {
       const sql = `INSERT INTO users (username, firstname, lastname, password)
-                   VALUES ('${user.UserName}', '${user.FirstName}', '${user.LastName}', '${user.password}')
+                   VALUES ('${user.username}', '${user.firstname}', '${user.lastname}', '${user.password}')
                    RETURNING *`;
       const results = await connectQuery(sql, client);
       return results.rows[0];
