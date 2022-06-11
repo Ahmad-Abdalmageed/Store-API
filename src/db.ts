@@ -13,7 +13,8 @@ const {
 } = process.env;
 
 let client: Pool;
-console.log(ENV);
+console.log(`Connecting to ${ENV} DB ...`);
+
 switch (ENV) {
   case 'dev':
     client = new Pool({
@@ -32,4 +33,6 @@ switch (ENV) {
     });
     break;
 }
+
+console.log('Connected !!');
 export { client };
