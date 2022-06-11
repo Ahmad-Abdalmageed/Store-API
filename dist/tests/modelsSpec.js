@@ -309,18 +309,31 @@ describe('Orders Table Model Testing', function () {
                     return [4 /*yield*/, orders.create(newOrder, Number(prod.id), 2)];
                 case 3:
                     res = _a.sent();
-                    console.log('The ', res.date);
-                    expect(res).toEqual({
-                        firstname: 'Store',
-                        lastname: 'API',
-                        name: 'Watch',
-                        price: 200,
-                        category: 'Wearables',
-                        status: 'Pending',
-                        date: new Date(),
-                        id: 2,
-                        quantity: 2
-                    });
+                    expect(res.id).toEqual(2);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('Should Delete an Order', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, orders.delete(2)];
+                case 1:
+                    res = _a.sent();
+                    expect(res.id).toEqual(2);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('Should List all Orders', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, orders.listAll()];
+                case 1:
+                    res = _a.sent();
+                    expect(res).toEqual([]);
                     return [2 /*return*/];
             }
         });

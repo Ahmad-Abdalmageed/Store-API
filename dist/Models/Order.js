@@ -78,7 +78,6 @@ var OrderTable = /** @class */ (function () {
                                     return [4 /*yield*/, (0, helpers_1.connectQuery)(sql_order, db_1.client)];
                                 case 1:
                                     results_order = _a.sent();
-                                    console.log(results_order);
                                     oid = results_order.rows[0].id;
                                     sql_db = "INSERT INTO order_product(order_id, prod_id, quantity)\n                      VALUES ('".concat(oid, "', '").concat(pid, "', '").concat(q, "')\n                      RETURNING *");
                                     return [4 /*yield*/, (0, helpers_1.connectQuery)(sql_db, db_1.client)];

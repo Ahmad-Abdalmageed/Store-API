@@ -10,7 +10,7 @@ dotenv_1.default.config();
 var _a = process.env, POSTGRES_HOST = _a.POSTGRES_HOST, POSTGRES_DB = _a.POSTGRES_DB, POSTGRES_DB_TEST = _a.POSTGRES_DB_TEST, POSTGRES_USER = _a.POSTGRES_USER, POSTGRES_PASSWORD = _a.POSTGRES_PASSWORD, ENV = _a.ENV;
 var client;
 exports.client = client;
-console.log(ENV);
+console.log("Connecting to ".concat(ENV, " DB ..."));
 switch (ENV) {
     case 'dev':
         exports.client = client = new pg_1.Pool({
@@ -29,3 +29,4 @@ switch (ENV) {
         });
         break;
 }
+console.log('Connected !!');
