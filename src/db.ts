@@ -37,5 +37,4 @@ switch (ENV) {
     break;
 }
 
-console.log('Connected !!');
 export { client };

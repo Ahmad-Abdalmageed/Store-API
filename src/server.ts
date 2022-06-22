@@ -6,6 +6,7 @@ import { orderRouter } from './Handlers/Orders';
 import { authenticate } from './Middleware/auth';
 import { notFound } from './Middleware/notFound';
 import dotenv from 'dotenv';
+import { client } from './db';
 
 dotenv.config();
 
@@ -21,8 +22,11 @@ app.use('/api/v1/store/products', prodRouter);
 app.use(notFound);
 app.use(errorHandler);
 // Server
-const startServer = (PORT: number) => {
+const startServer = async (PORT: number) => {
   try {
+    const db = await client.connect();
+    console.log('DB Connected !!');
+    db.release();
     app.listen(PORT, () => {
       console.log(`Server Started on PORT ${PORT}`);
     });
