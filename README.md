@@ -246,21 +246,3 @@ All Routes include Authentication
 
 
 
-
-
-### FOR SUBMISSION PURPOSES ONLY
-
-```
-POSTGRES_HOST=127.0.0.1
-POSTGRES_PORT=5432
-POSTGRES_DB=store_api
-POSTGRES_DB_TEST=store_api_test
-POSTGRES_USER=store_api
-POSTGRES_PASSWORD=store_api_ahmed
-ENV=dev
-PORT=3000
-BCRYPT_PASSWORD=store_api_ahmed
-SALT_ROUNDS=10
-TOKEN_SECRET=store_api_123
-```
-
