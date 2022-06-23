@@ -2,7 +2,6 @@
   "name": "storefront_backend",
   "version": "0.1.0",
   "description": "A Typescript API used in building a Modern Storefront allowing numerous users to purchase Company's Products",
-  "main": "server.ts",
   "scripts": {
     "start": "node dist/server.js",
     "watch": "tsc-watch --onSuccess \"node ./dist/server.js\"",
@@ -18,6 +17,9 @@
   },
   "author": "Ahmad Abdalmageed",
   "license": "ISC",
+  "engines": {
+    "node": ">=16.15.1"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
