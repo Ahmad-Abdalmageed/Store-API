@@ -7,27 +7,27 @@ exports.client = void 0;
 var dotenv_1 = __importDefault(require("dotenv"));
 var pg_1 = require("pg");
 dotenv_1.default.config();
-var _a = process.env, POSTGRES_HOST = _a.POSTGRES_HOST, POSTGRES_PORT = _a.POSTGRES_PORT, POSTGRES_DB = _a.POSTGRES_DB, POSTGRES_DB_TEST = _a.POSTGRES_DB_TEST, POSTGRES_USER = _a.POSTGRES_USER, POSTGRES_PASSWORD = _a.POSTGRES_PASSWORD, ENV = _a.ENV;
+var _a = process.env, RDS_HOSTNAME = _a.RDS_HOSTNAME, RDS_PORT = _a.RDS_PORT, RDS_DB_NAME = _a.RDS_DB_NAME, RDS_DB_NAME_TEST = _a.RDS_DB_NAME_TEST, RDS_USERNAME = _a.RDS_USERNAME, RDS_PASSWORD = _a.RDS_PASSWORD, ENV = _a.ENV;
 var client;
 exports.client = client;
 console.log("Connecting to ".concat(ENV, " DB ..."));
 switch (ENV) {
     case 'dev':
         exports.client = client = new pg_1.Pool({
-            host: POSTGRES_HOST,
-            port: Number(POSTGRES_PORT),
-            database: POSTGRES_DB,
-            user: POSTGRES_USER,
-            password: POSTGRES_PASSWORD
+            host: RDS_HOSTNAME,
+            port: Number(RDS_PORT),
+            database: RDS_DB_NAME,
+            user: RDS_USERNAME,
+            password: RDS_PASSWORD
         });
         break;
     case 'test':
         exports.client = client = new pg_1.Pool({
-            host: POSTGRES_HOST,
-            port: Number(POSTGRES_PORT),
-            database: POSTGRES_DB_TEST,
-            user: POSTGRES_USER,
-            password: POSTGRES_PASSWORD
+            host: RDS_HOSTNAME,
+            port: Number(RDS_PORT),
+            database: RDS_DB_NAME_TEST,
+            user: RDS_USERNAME,
+            password: RDS_PASSWORD
         });
         break;
 }
