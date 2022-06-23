@@ -4,12 +4,12 @@ import { Pool } from 'pg';
 dotenv.config();
 
 const {
-  POSTGRES_HOST,
-  POSTGRES_PORT,
-  POSTGRES_DB,
-  POSTGRES_DB_TEST,
-  POSTGRES_USER,
-  POSTGRES_PASSWORD,
+  RDS_HOSTNAME,
+  RDS_PORT,
+  RDS_DB_NAME,
+  RDS_DB_NAME_TEST,
+  RDS_USERNAME,
+  RDS_PASSWORD,
   ENV
 } = process.env;
 
@@ -19,20 +19,20 @@ console.log(`Connecting to ${ENV} DB ...`);
 switch (ENV) {
   case 'dev':
     client = new Pool({
-      host: POSTGRES_HOST,
-      port: Number(POSTGRES_PORT),
-      database: POSTGRES_DB,
-      user: POSTGRES_USER,
-      password: POSTGRES_PASSWORD
+      host: RDS_HOSTNAME,
+      port: Number(RDS_PORT),
+      database: RDS_DB_NAME,
+      user: RDS_USERNAME,
+      password: RDS_PASSWORD
     });
     break;
   case 'test':
     client = new Pool({
-      host: POSTGRES_HOST,
-      port: Number(POSTGRES_PORT),
-      database: POSTGRES_DB_TEST,
-      user: POSTGRES_USER,
-      password: POSTGRES_PASSWORD
+      host: RDS_HOSTNAME,
+      port: Number(RDS_PORT),
+      database: RDS_DB_NAME_TEST,
+      user: RDS_USERNAME,
+      password: RDS_PASSWORD
     });
     break;
 }

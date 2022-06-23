@@ -1,16 +1,16 @@
 {
   "dev": {
     "driver": "pg",
-    "host": {"ENV":  "POSTGRES_HOST"},
-    "database": {"ENV":  "POSTGRES_DB"},
-    "user": {"ENV":  "POSTGRES_USER"},
-    "password":{"ENV":  "POSTGRES_PASSWORD"}
+    "host": {"ENV":  "RDS_HOSTNAME"},
+    "database": {"ENV":  "RDS_DB_NAME"},
+    "user": {"ENV":  "RDS_USERNAME"},
+    "password":{"ENV":  "RDS_PASSWORD"}
   },
   "test": {
     "driver": "pg",
-    "host": {"ENV":  "POSTGRES_HOST"},
-    "database": {"ENV":  "POSTGRES_DB_TEST"},
-    "user": {"ENV":  "POSTGRES_USER"},
-    "password":{"ENV":  "POSTGRES_PASSWORD"}
+    "host": {"ENV":  "RDS_HOSTNAME"},
+    "database": {"ENV":  "RDS_DB_NAME_TEST"},
+    "user": {"ENV":  "RDS_USERNAME"},
+    "password":{"ENV":  "RDS_PASSWORD"}
   }
 }
