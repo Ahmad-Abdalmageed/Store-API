@@ -4,6 +4,7 @@
   "description": "A Typescript API used in building a Modern Storefront allowing numerous users to purchase Company's Products",
   "main": "server.ts",
   "scripts": {
+    "start": "node dist/server.js",
     "watch": "tsc-watch --onSuccess \"node ./dist/server.js\"",
     "build": "npx tsc",
     "jasmine": "jasmine-ts",
