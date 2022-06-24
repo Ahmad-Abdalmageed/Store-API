@@ -35,7 +35,6 @@ const startServer = async (PORT: number) => {
   }
 };
 
-console.log(process.env.RDS_HOSTNAME);
 startServer(Number(process.env.PORT) || 3000);
 
 // For Testing Purposes
