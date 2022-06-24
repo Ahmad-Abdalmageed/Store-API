@@ -16,27 +16,31 @@ Other Binaries and Versions are Included in `package.json` file.
 
 ```sh
 .
-├── dist
-│   ├── Controllers
-│   ├── Errors
-│   ├── Handlers
-│   ├── Middleware
-│   ├── Models
-│   └── tests
-│       └── helpers
-├── imgs
-├── migrations
-│   └── sqls
-├── spec
-│   └── support
-└── src
-    ├── Controllers
-    ├── Errors
-    ├── Handlers
-    ├── Middleware
-    ├── Models
-    └── tests
-        └── helpers
+└── server
+    ├── bin
+    ├── dist
+    │   ├── Controllers
+    │   ├── Errors
+    │   ├── Handlers
+    │   ├── Middleware
+    │   ├── Models
+    │   └── tests
+    │       └── helpers
+    ├── imgs
+    ├── migrations
+    │   └── sqls
+    ├── spec
+    │   └── support
+    └── src
+        ├── Controllers
+        ├── Errors
+        ├── Handlers
+        ├── Middleware
+        ├── Models
+        └── tests
+            └── helpers
+
+
 ```
 
 - **`./dist`** : Server Build Files
@@ -49,11 +53,11 @@ Other Binaries and Versions are Included in `package.json` file.
 ```sh
 # Clone the Repo
 git clone git@github.com:Ahmad-Abdalmageed/Store-API.git
-cd ./Store-API
+cd ./Store-API/server
 
 # Install the Dependencies listed in the package.json 
 # You could also use npm install
-yarn
+yarn install
 ```
 
 ## Connect to Database 
@@ -95,13 +99,13 @@ CREATE DATABASE {Database Name}
 With that you are all set up to use the Database, and to set up the Tables you will need to run the Migration Script presented in the `package.json` File
 
 ```sh
-db-migrate up
+npm run server:migrate-up
 ```
 
 This command will create all needed tables for you. Finally to start the server you need to run
 
 ```sh
-node ./dist/server.js
+npm run server:build && npm run server:start
 ```
 
 
