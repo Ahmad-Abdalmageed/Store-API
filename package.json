@@ -6,6 +6,7 @@
     "server:start": "cd server && npm run start",
     "server:watch": "cd server && npm run watch",
     "server:test": "cd server && npm run test",
+    "server:deploy": "cd server && npm run deploy",
     "server:migrate-up": "cd server && npm run up",
     "server:migrate-down": "cd server && npm run down"
   }
