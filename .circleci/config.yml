@@ -26,6 +26,9 @@ commands:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
+  check_env:
+    name: "Used to show ENV Vars"
+    command: "printenv"
   build:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -74,6 +77,7 @@ jobs:
 workflows:
   build_test_deploy:
     jobs:
+      - check_env
       - build
       - deploy:
           requires:
