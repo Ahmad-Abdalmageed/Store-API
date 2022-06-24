@@ -33,7 +33,7 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       -run:
-        name: "Used to show ENV Vars"
+        name: Used to show ENV Vars
         command: printenv
   build:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
