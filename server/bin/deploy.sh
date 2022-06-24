@@ -8,4 +8,4 @@ echo "*******__ 2.Sets the specified environment....👨🏻‍💻🤌🏻  __*
 eb use store-api-dev
 
 echo "*******__ 3.Deploy the changes....👨🏻‍💻🤌🏻  __*******"
-eb deploy store-api-dev
+eb deploy
