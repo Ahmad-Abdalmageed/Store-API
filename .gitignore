@@ -1,7 +1,6 @@
 server/node_modules/
 .idea
-server/.env
-server/dist
+./server
 # Elastic Beanstalk Files
 server/.elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
