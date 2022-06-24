@@ -242,7 +242,7 @@ All Routes include Authentication
 | quantity | INTEGER | NOT NULL   | -                        |
 
 
-<img height="400" src="./imgs/schema.png"/>
+<img height="400" src="server/imgs/schema.png"/>
 
 
 
