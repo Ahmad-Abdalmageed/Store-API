@@ -1,0 +1,12 @@
+{
+  "license": "ISC",
+  "scripts": {
+    "server:install": "cd server && npm install",
+    "server:build": "cd server && npm run build",
+    "server:start": "cd server && npm run start",
+    "server:watch": "cd server && npm run watch",
+    "server:test": "cd server && npm run test",
+    "server:migrate-up": "cd server && npm run up",
+    "server:migrate-down": "cd server && npm run down"
+  }
+}

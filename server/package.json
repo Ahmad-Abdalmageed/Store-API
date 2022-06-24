@@ -3,18 +3,19 @@
   "version": "0.1.0",
   "description": "A Typescript API used in building a Modern Storefront allowing numerous users to purchase Company's Products",
   "scripts": {
+    "clean": "rimraf dist/",
+    "zip": "bestzip dist/Archive.zip .",
     "start": "node dist/server.js",
+    "build": "npm run clean && npx tsc && cd dist/ && npm run zip && cd ..",
     "deploy": "chmod +x bin/deploy.sh && ./bin/deploy.sh",
-    "watch": "tsc-watch --onSuccess \\\"node server/dist/server.js\\\"",
-    "build": "npx tsc",
-    "jasmine": "jasmine-ts",
-    "lint": "eslint .. --ext .ts",
-    "prettier": "prettier --config .prettierrc '**/*.ts' --write",
+    "watch": "tsc-watch --onSuccess \"npm run start\"",
+    "test": "db-migrate --env test up && ENV=test jasmine-ts && db-migrate --env test down",
     "up": "db-migrate up",
     "down": "db-migrate down",
     "up-test": "db-migrate --env test up",
     "down-test": "db-migrate --env test down",
-    "test": "db-migrate --env test up && ENV=test jasmine-ts && db-migrate --env test down"
+    "lint": "eslint .. --ext .ts",
+    "prettier": "prettier --config .prettierrc '**/*.ts' --write"
   },
   "author": "Ahmad Abdalmageed",
   "license": "ISC",
@@ -53,6 +54,8 @@
     "prettier": "^2.6.2",
     "supertest": "^6.2.3",
     "ts-node": "^10.8.1",
-    "tsc-watch": "^4.2.9"
+    "tsc-watch": "^4.2.9",
+    "bestzip": "^2.2.1",
+    "rimraf": "^3.0.2"
   }
 }
