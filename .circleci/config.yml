@@ -13,7 +13,7 @@ commands:
     steps:
       - run:
           name: List ALL
-          command: ls -a
+          command: ls server/ -a
   install_server:
     description: "Command for Server Installation"
     steps:
