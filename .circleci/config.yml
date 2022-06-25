@@ -66,12 +66,12 @@ jobs:
     docker:
       - image: "cimg/base:stable"
     steps:
-      - node/install
-      - node/install-yarn
-      - aws-cli/setup
-      - eb/setup
-      - checkout
-      - install_server
+#      - node/install
+#      - node/install-yarn
+#      - aws-cli/setup
+#      - eb/setup
+#      - checkout
+#      - install_server
       - list_dirs
       - run:
           name: Deploy Server
