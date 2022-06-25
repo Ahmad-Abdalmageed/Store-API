@@ -42,7 +42,7 @@ commands:
     description: " Runs Commands Responsible for Deploying the Server"
     steps:
       - run:
-          name: Test Server
+          name: Deploy Server
           command: yarn server:deploy
 # ........................ CI/CD Jobs ..................................
 # Each Step in CI/CD Workflow below is defined here, using Circle CI   .
