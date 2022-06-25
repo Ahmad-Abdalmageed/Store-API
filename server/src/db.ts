@@ -1,39 +1,26 @@
-import dotenv from 'dotenv';
 import { Pool } from 'pg';
-
-dotenv.config();
-
-const {
-  RDS_HOSTNAME,
-  RDS_HOSTNAME_TEST,
-  RDS_PORT,
-  RDS_DB_NAME,
-  RDS_DB_NAME_TEST,
-  RDS_USERNAME,
-  RDS_PASSWORD,
-  ENV
-} = process.env;
+import config from './config';
 
 let client: Pool;
-console.log(`Connecting to ${ENV} DB ...`);
+console.log(`Connecting to ${config.ENV} DB ...`);
 
-switch (ENV) {
+switch (config.ENV) {
   case 'dev':
     client = new Pool({
-      host: RDS_HOSTNAME,
-      port: Number(RDS_PORT),
-      database: RDS_DB_NAME,
-      user: RDS_USERNAME,
-      password: RDS_PASSWORD
+      host: config.RDS_HOSTNAME,
+      port: Number(config.RDS_PORT),
+      database: config.RDS_DB_NAME,
+      user: config.RDS_USERNAME,
+      password: config.RDS_PASSWORD
     });
     break;
   case 'test':
     client = new Pool({
-      host: RDS_HOSTNAME_TEST,
-      port: Number(RDS_PORT),
-      database: RDS_DB_NAME_TEST,
-      user: RDS_USERNAME,
-      password: RDS_PASSWORD
+      host: config.RDS_HOSTNAME_TEST,
+      port: Number(config.RDS_PORT),
+      database: config.RDS_DB_NAME_TEST,
+      user: config.RDS_USERNAME,
+      password: config.RDS_PASSWORD
     });
     break;
 }

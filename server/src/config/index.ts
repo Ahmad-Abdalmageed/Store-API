@@ -1,0 +1,32 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+const {
+  RDS_HOSTNAME,
+  RDS_HOSTNAME_TEST,
+  RDS_PORT,
+  RDS_DB_NAME,
+  RDS_DB_NAME_TEST,
+  RDS_USERNAME,
+  RDS_PASSWORD,
+  ENV,
+  PORT,
+  BCRYPT_PASSWORD,
+  SALT_ROUNDS,
+  TOKEN_SECRET
+} = process.env;
+
+export default {
+  RDS_HOSTNAME,
+  RDS_HOSTNAME_TEST,
+  RDS_PORT,
+  RDS_DB_NAME,
+  RDS_DB_NAME_TEST,
+  RDS_USERNAME,
+  RDS_PASSWORD,
+  ENV,
+  PORT,
+  BCRYPT_PASSWORD,
+  SALT_ROUNDS,
+  TOKEN_SECRET
+};

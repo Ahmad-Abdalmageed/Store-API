@@ -5,12 +5,10 @@ import { apiError } from '../Errors/apiError';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Secret } from 'jsonwebtoken';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import config from '../config';
 
 const users = new UserTable();
-const tokenSecret = process.env.TOKEN_SECRET as unknown as Secret;
+const tokenSecret = config.TOKEN_SECRET as unknown as Secret;
 
 // Return All Users Route Controller
 const index = tryCatchWrapExpress(
@@ -24,8 +22,8 @@ const index = tryCatchWrapExpress(
 // Create new User
 const create = tryCatchWrapExpress(async (req: Request, res: Response) => {
   const passHash = bcrypt.hashSync(
-    req.body.pass + process.env.BCRYPT_PASSWORD,
-    Number(process.env.SALT_ROUNDS)
+    req.body.pass + config.BCRYPT_PASSWORD,
+    Number(config.SALT_ROUNDS)
   );
   const newUser: User = {
     username: req.body.uname,
@@ -34,7 +32,7 @@ const create = tryCatchWrapExpress(async (req: Request, res: Response) => {
     password: passHash
   };
   const results = await users.create(newUser);
-  const tokenSecret = process.env.TOKEN_SECRET as unknown as Secret;
+  const tokenSecret = config.TOKEN_SECRET as unknown as Secret;
   const user_token = jwt.sign({ user: results }, tokenSecret);
   res.status(200).json(user_token);
 });

@@ -5,14 +5,13 @@ import { errorHandler } from './Middleware/errorHandler';
 import { orderRouter } from './Handlers/Orders';
 import { authenticate } from './Middleware/auth';
 import { notFound } from './Middleware/notFound';
-import dotenv from 'dotenv';
 import { client } from './db';
-
-dotenv.config();
+import config from './config';
 
 const app: express.Application = express();
 
 // Routes & Middlewares
+// CORS Access Permission
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -47,7 +46,9 @@ app.use(errorHandler);
 // Server
 
 app.get('/', (req: Request, res: Response) => {
-  res.json({ msg: 'HELLO !!!' });
+  res.send(
+    '<h1>Store Front API</h1>\nSee Documentation at <a href="https://github.com/Ahmad-Abdalmageed/Store-API">Documentation</a>'
+  );
 });
 
 const startServer = async (PORT: number) => {
@@ -63,7 +64,7 @@ const startServer = async (PORT: number) => {
   }
 };
 
-startServer(Number(process.env.PORT) || 3000);
+startServer(Number(config.PORT) || 3000);
 
 // For Testing Purposes
 export { app };
