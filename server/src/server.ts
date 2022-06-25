@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express';
-import cors from 'cors';
 import { usersRouter } from './Handlers/Users';
 import { prodRouter } from './Handlers/Products';
 import { errorHandler } from './Middleware/errorHandler';
@@ -15,7 +14,6 @@ const app: express.Application = express();
 
 // Routes & Middlewares
 app.use(express.json());
-app.use(cors);
 
 app.use('/api/v1/store/users', usersRouter);
 app.use('/api/v1/store/orders', authenticate, orderRouter);
