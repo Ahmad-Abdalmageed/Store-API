@@ -26,24 +26,24 @@ commands:
           paths:
             - node_modules
           key: v2-dependencies-{{ checksum "package.json" }}
-    build_server:
-      description: " Runs Commands Responsible for Building the Server"
-      steps:
-        - run:
-            name: Build Server
-            command: yarn server:build
-    test_server:
-      description: " Runs Commands Responsible for Testing the Server"
-      steps:
-        - run:
-            name: Test Server
+  build_server:
+    description: " Runs Commands Responsible for Building the Server"
+    steps:
+      - run:
+          name: Build Server
+          command: yarn server:build
+  test_server:
+    description: " Runs Commands Responsible for Testing the Server"
+    steps:
+      - run:
+          name: Test Server
             command: yarn server:test
-    deploy_server:
-      description: " Runs Commands Responsible for Deploying the Server"
-      steps:
-        - run:
-            name: Test Server
-            command: yarn server:deploy
+  deploy_server:
+    description: " Runs Commands Responsible for Deploying the Server"
+    steps:
+      - run:
+          name: Test Server
+          command: yarn server:deploy
 # ........................ CI/CD Jobs ..................................
 # Each Step in CI/CD Workflow below is defined here, using Circle CI   .
 # persist_to_workspace to keep the build files for testing and deploy  .
