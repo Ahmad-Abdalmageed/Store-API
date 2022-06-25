@@ -68,9 +68,9 @@ jobs:
     steps:
 #      - node/install
 #      - node/install-yarn
-#      - aws-cli/setup
-#      - eb/setup
-#      - checkout
+      - aws-cli/setup
+      - eb/setup
+      - checkout
 #      - install_server
       - list_dirs
       - run:
