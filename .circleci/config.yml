@@ -1,5 +1,4 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
 orbs:
@@ -29,16 +28,11 @@ commands:
             - node_modules
           key: v2-dependencies-{{ checksum "package.json" }}
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   build:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
       - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+
     steps:
       - node/install
       - node/install-yarn
@@ -47,31 +41,16 @@ jobs:
       - run:
           name: Build Server
           command: yarn server:build
-#  test:
-#    docker:
-#      - image: "cimg/base:stable"
-#    steps:
-#      - node/install
-#      - node/install-yarn
-#      - checkout
-#      - install_client
-#      - install_server
-#      - run:
-#          name: Test Client
-#          command: yarn client:test
-#      - run:
-#          name: Test Server
-#          command: yarn server:test
   deploy:
     docker:
-      - image: "cimg/base:stable"
+      - image: cimg/base:stable
     steps:
-#      - node/install
-#      - node/install-yarn
+      - node/install
+      - node/install-yarn
       - aws-cli/setup
       - eb/setup
-      - checkout
-#      - install_server
+#      - checkout
+      - install_server
       - list_dirs
       - run:
           name: Deploy Server
@@ -79,10 +58,9 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  build_test_deploy:
+  build_deploy:
     jobs:
       - build
       - deploy:
           requires:
             - build
-
