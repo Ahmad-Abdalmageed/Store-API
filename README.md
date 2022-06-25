@@ -1,5 +1,7 @@
 # Storefront API
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Ahmad-Abdalmageed/Store-API/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/Ahmad-Abdalmageed/Store-API/tree/master)
 
+A Typescript API used in building a Modern Storefront allowing numerous users to purchase Company's Products
 ## Pre-requisites
 
 | Binaries   | Version          |
@@ -53,16 +55,16 @@ Other Binaries and Versions are Included in `package.json` file.
 ```sh
 # Clone the Repo
 git clone git@github.com:Ahmad-Abdalmageed/Store-API.git
-cd ./Store-API/server
+cd ./Store-API/
 
 # Install the Dependencies listed in the package.json 
 # You could also use npm install
 yarn install
 ```
 
-## Connect to Database 
+## Connect to a Database Locally 
 
-In order to Connect to the Database you need to create a new user, Connect to the PostgreSQL Server:
+In order to Connect to a Local Database you need to create a new user, Connect to the PostgreSQL Server:
 
 ```sh
 sudo -i -u postgre
@@ -79,12 +81,12 @@ Postgres will next ask you to enter new user details one by one, as shown below
 You can use your own user name and password but you will need to create an `.env` file with the Following variables:
 
 ```
-POSTGRES_HOST={PostgreSQL Server Host}
-POSTGRES_PORT={Connection Port}
-POSTGRES_DB={Database Name}
-POSTGRES_DB_TEST={Test Databse Name}
-POSTGRES_USER={You user name}
-POSTGRES_PASSWORD={Your Password}
+RDS_HOSTNAME    ={PostgreSQL Server Host}
+RDS_PORT        ={Connection Port}
+RDS_DB_NAME     ={Database Name}
+RDS_DB_NAME_TEST={Test Databse Name}
+RDS_USERNAME    ={You user name}
+RDS_PASSWORD    ={Your Password}
 ```
 
 The PostgreSQL Server host in this Application is 127.0.0.1 with the default port being 5432 (PostgreSQL Default), You can alternatively add your host and port by modifying the `.env` file.
