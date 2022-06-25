@@ -61,7 +61,7 @@ jobs:
       - node/install-yarn
       - run:
           name: Test API
-          comman: yarn server:test
+          command: yarn server:test
   deploy:
     docker:
       - image: "cimg/base:stable"
