@@ -8,7 +8,7 @@
   },
   "test": {
     "driver": "pg",
-    "host": {"ENV":  "RDS_HOSTNAME"},
+    "host": {"ENV":  "RDS_HOSTNAME_TEST"},
     "database": {"ENV":  "RDS_DB_NAME_TEST"},
     "user": {"ENV":  "RDS_USERNAME"},
     "password":{"ENV":  "RDS_PASSWORD"}
