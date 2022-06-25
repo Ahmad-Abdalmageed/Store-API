@@ -1,12 +1,15 @@
 {
   "license": "ISC",
   "scripts": {
-    "server:install": "cd server && npm install",
-    "server:build": "cd server && npm run build",
-    "server:watch": "cd server && npm run watch",
-    "server:test": "cd server && npm run test",
-    "server:deploy": "cd server && npm run deploy",
-    "server:migrate-up": "cd server && npm run up",
-    "server:migrate-down": "cd server && npm run down"
+    "client:start": "cd client && yarn start",
+    "client:build": "cd client && yarn build",
+    "client:deploy": "cd client && yarn deploy",
+    "server:install": "cd server && yarn install",
+    "server:build": "cd server && yarn run build",
+    "server:watch": "cd server && yarn run watch",
+    "server:test": "cd server && yarn run test",
+    "server:deploy": "cd server && yarn run deploy",
+    "server:migrate-up": "cd server && yarn run up",
+    "server:migrate-down": "cd server && yarn run down"
   }
 }
