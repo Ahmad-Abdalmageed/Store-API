@@ -51,12 +51,8 @@ jobs:
     steps:
       - attach_to_workspace:
           - at: ./
-#      - node/install
-#      - node/install-yarn
       - aws-cli/setup
       - eb/setup
-#      - checkout
-#      - install_server
       - list_dirs
       - run:
           name: Deploy Server
