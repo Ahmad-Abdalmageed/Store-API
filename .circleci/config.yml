@@ -12,7 +12,7 @@ commands:
     steps:
       - run:
           name: List ALL
-          command: ls server/ -a
+          command: ls
   install_server:
     description: "Command for Server Installation"
     steps:
@@ -30,9 +30,6 @@ commands:
 
 jobs:
   build:
-    docker:
-      - image: cimg/base:stable
-
     steps:
       - node/install
       - node/install-yarn
@@ -41,20 +38,25 @@ jobs:
       - run:
           name: Build Server
           command: yarn server:build
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - ./
   deploy:
-    docker:
-      - image: cimg/base:stable
     steps:
-      - node/install
-      - node/install-yarn
+      - attach_to_workspace:
+          - at: ./
+#      - node/install
+#      - node/install-yarn
       - aws-cli/setup
       - eb/setup
 #      - checkout
-      - install_server
+#      - install_server
       - list_dirs
       - run:
           name: Deploy Server
           command: yarn server:deploy
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
