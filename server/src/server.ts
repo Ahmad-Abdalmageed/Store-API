@@ -1,4 +1,5 @@
 import express from 'express';
+const cors = require('cors');
 import { usersRouter } from './Handlers/Users';
 import { prodRouter } from './Handlers/Products';
 import { errorHandler } from './Middleware/errorHandler';
@@ -13,6 +14,7 @@ dotenv.config();
 const app: express.Application = express();
 
 // Routes & Middlewares
+app.use(cors);
 app.use(express.json());
 
 app.use('/api/v1/store/users', usersRouter);
