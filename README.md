@@ -18,9 +18,15 @@ Other Binaries and Versions are Included in `package.json` file.
 
 ```sh
 .
+├── client
+│   ├── public
+│   └── src
+├── Docs
+│   └── imgs
 └── server
     ├── bin
     ├── dist
+    │   ├── config
     │   ├── Controllers
     │   ├── Errors
     │   ├── Handlers
@@ -34,6 +40,7 @@ Other Binaries and Versions are Included in `package.json` file.
     ├── spec
     │   └── support
     └── src
+        ├── config
         ├── Controllers
         ├── Errors
         ├── Handlers
@@ -45,12 +52,13 @@ Other Binaries and Versions are Included in `package.json` file.
 
 ```
 
-- **`./dist`** : Server Build Files
-- **`./src`**: Typescript Source Files 
-  - **`./test`** : Includes the Test Scripts
-- **`./migrations`** : Include PostgreSQL Migration Scripts
+- **`./server/dist`** : Server Build Files
+- **`./server/src`**: Typescript Source Files 
+  - **`./server/src/test`** : Includes the Test Scripts
+- **`./client/src`**: Include Client Source Files
+- **`./server/migrations`** : Include PostgreSQL Migration Scripts
 
-## Installation 
+## Installation
 
 ```sh
 # Clone the Repo
@@ -62,7 +70,7 @@ cd ./Store-API/
 yarn install
 ```
 
-## Connect to a Database Locally 
+## Connect to a Database Locally
 
 In order to Connect to a Local Database you need to create a new user, Connect to the PostgreSQL Server:
 
@@ -98,6 +106,12 @@ psql
 CREATE DATABASE {Database Name}
 ```
 
+## Connection on AWS 
+
+In order to connect to an AWS RDS service you need to create a user with Admin Access to RDS and create an EC2 Instance from the AWS Console. Just pick all the Options you need for the DB and don't forget to add the Database name to your instance. After Creation add you ip to the VPC Inbound Rules and you're good to go.
+
+## Build and Start
+
 With that you are all set up to use the Database, and to set up the Tables you will need to run the Migration Script presented in the `package.json` File
 
 ```sh
@@ -110,9 +124,17 @@ This command will create all needed tables for you. Finally to start the server 
 npm run server:build && npm run server:start
 ```
 
+## Testing 
+
+Server Testing is added to the Deployed Pipeline but for local usages a test Script is added to the `package.json` 
+
+```sh
+"server:test": "cd server && yarn run test"
+```
 
 
-### API Reference
+
+## API Reference
 
 #### Products
 
@@ -247,8 +269,10 @@ All Routes include Authentication
 | prod_id  | INTEGER | NOT NULL   | Foreign Key --> products |
 | quantity | INTEGER | NOT NULL   | -                        |
 
-
 <img height="400" src="server/imgs/schema.png"/>
 
+## Deployment
 
+Store Front API is deployed through Amazon Web Services using Elastic Beanstalk (EBS), Relational Database Service (RDS) and Scalable Storage (S3), Further Documentation can be found in [Docs](./Docs) about each service and how they work together. The Project now includes a Front End Interface, used for testing Purposes only and to leverage all of AWS services available through here [UI](http://ahmed-bucket-1.s3-website-us-east-1.amazonaws.com/) , where you will find a live lsit of all the Storefront Products. While the main API is deployed [here](http://store-api-dev.eba-8bffxpfd.us-east-1.elasticbeanstalk.com/) where you can follow API Reference to use. 
 
+![awsarch](./Docs/imgs/awsarch.png)
