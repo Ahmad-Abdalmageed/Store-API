@@ -37,7 +37,7 @@ commands:
     steps:
       - run:
           name: Test Server
-            command: yarn server:test
+          command: yarn server:test
   deploy_server:
     description: " Runs Commands Responsible for Deploying the Server"
     steps:
