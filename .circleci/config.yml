@@ -57,6 +57,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
+      - node/install
+      - node/install-yarn
       - aws-cli/setup
       - eb/setup
 #      - checkout
