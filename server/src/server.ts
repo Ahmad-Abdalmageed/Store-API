@@ -1,5 +1,5 @@
-import express from 'express';
-const cors = require('cors');
+import express, { Request, Response } from 'express';
+import cors from 'cors';
 import { usersRouter } from './Handlers/Users';
 import { prodRouter } from './Handlers/Products';
 import { errorHandler } from './Middleware/errorHandler';
@@ -14,8 +14,8 @@ dotenv.config();
 const app: express.Application = express();
 
 // Routes & Middlewares
-app.use(cors);
 app.use(express.json());
+app.use(cors);
 
 app.use('/api/v1/store/users', usersRouter);
 app.use('/api/v1/store/orders', authenticate, orderRouter);
@@ -24,6 +24,11 @@ app.use('/api/v1/store/products', prodRouter);
 app.use(notFound);
 app.use(errorHandler);
 // Server
+
+app.get('/', (req: Request, res: Response) => {
+  res.json({ msg: 'HELLO !!!' });
+});
+
 const startServer = async (PORT: number) => {
   try {
     const db = await client.connect();
