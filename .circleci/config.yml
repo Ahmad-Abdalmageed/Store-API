@@ -55,7 +55,7 @@ jobs:
     docker:
       - image: "cimg/base:stable"
     steps:
-      - attach_to_workspace:
+      - attach_workspace:
           at: ./
       - aws-cli/setup
       - eb/setup
