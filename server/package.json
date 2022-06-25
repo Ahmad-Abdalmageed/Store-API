@@ -10,11 +10,11 @@
     "build": "npm run clean && npx tsc && npm run copy && cd dist/ && npm run zip && cd ..",
     "deploy": "chmod +x bin/deploy.sh && ./bin/deploy.sh",
     "watch": "tsc-watch --onSuccess \"node dist/server.js\"",
-    "test": "db-migrate --env test up && ENV=test jasmine-ts && db-migrate --env test down",
+    "test": "db-migrate --env test up && ENV=test jasmine-ts && db-migrate --env test reset",
     "up": "db-migrate up",
     "down": "db-migrate down",
     "up-test": "db-migrate --env test up",
-    "down-test": "db-migrate --env test down",
+    "down-test": "db-migrate --env test reset",
     "lint": "eslint .. --ext .ts",
     "prettier": "prettier --config .prettierrc '**/*.ts' --write"
   },
