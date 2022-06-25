@@ -8,6 +8,12 @@ orbs:
   eb: circleci/aws-elastic-beanstalk@2.0.1
 
 commands:
+  list_dirs:
+    description: "List Current Environment Dirs"
+    steps:
+      - run:
+          name: List ALL
+          command: ls -a
   install_server:
     description: "Command for Server Installation"
     steps:
@@ -66,6 +72,7 @@ jobs:
       - eb/setup
       - checkout
       - install_server
+      - list_dirs
       - run:
           name: Deploy Server
           command: yarn server:deploy
