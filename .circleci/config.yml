@@ -30,6 +30,9 @@ commands:
 
 jobs:
   build:
+    docker:
+      - image: cimg/base:stable
+
     steps:
       - node/install
       - node/install-yarn
@@ -43,6 +46,8 @@ jobs:
           paths:
             - ./
   deploy:
+    docker:
+      - image: cimg/base:stable
     steps:
       - attach_to_workspace:
           - at: ./
