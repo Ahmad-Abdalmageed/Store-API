@@ -1,11 +1,13 @@
 server/node_modules/
-client/node_modules
-.idea
 server/dist
 server/.env
+client/node_modules
+client/build/
 client/.env
+.idea
 # Elastic Beanstalk Files
 server/.elasticbeanstalk/*
 !server/.elasticbeanstalk/config.yml
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
