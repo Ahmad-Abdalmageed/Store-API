@@ -4,5 +4,6 @@ server/dist
 server/.env
 # Elastic Beanstalk Files
 server/.elasticbeanstalk/*
+!server/.elasticbeanstalk/config.yml
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
