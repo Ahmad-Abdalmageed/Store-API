@@ -51,6 +51,17 @@ jobs:
           root: ./
           paths:
             - ./
+  test:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - attach_workspace:
+          at: ./
+      - node/install
+      - node/install-yarn
+      - run:
+          name: Test API
+          comman: yarn server:test
   deploy:
     docker:
       - image: "cimg/base:stable"
@@ -73,7 +84,10 @@ workflows:
   build_test_deploy:
     jobs:
       - build
-      - deploy:
+      - test:
           requires:
             - build
+      - deploy:
+          requires:
+            - test
 
