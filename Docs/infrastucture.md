@@ -61,7 +61,7 @@ eb create --sample <Environment_name>
 eb deploy
 
 # Setting Environment Variables 
-eb setenv ENV_VAR=ENV_VAR_VAL 
+eb setenv ENV_VAR=$ENV_VAR_VAL 
 ```
 
 EBS is where the Server lies and all the Requests to te Servers are passed through here and to the Database RDS.
