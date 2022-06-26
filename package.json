@@ -1,6 +1,7 @@
 {
   "license": "ISC",
   "scripts": {
+    "client:install": "cd client && yarn install",
     "client:start": "cd client && yarn start",
     "client:build": "cd client && yarn build",
     "client:deploy": "cd client && yarn deploy",
