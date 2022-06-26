@@ -15,7 +15,7 @@ Defined at [.circleci](../.circleci) is the Process the Project goes through fro
 
 ## Commands
 
-In this Section we Defined Reusable commands as stated in the Circle CI [Documentation](https://circleci.com/docs/2.0/concepts), These Commands will be used in the jobs section.
+In this Section we Defined Reusable commands as stated in the Circle CI [Documentation](https://circleci.com/docs/2.0/concepts), These Commands will be used in the jobs section. Also added Scripts for Building and Deploying the Client Side.
 
 ```sh
 # Application Re-usable Commands
@@ -26,6 +26,24 @@ commands:
       - run:
           name: List ALL
           command: ls server/
+  client_install:
+    description: "Command for Client Installation"
+    steps:
+      - run:
+          name: Client Install
+          command: yarn client:install
+  client_build:
+    description: "Command for Building Client"
+    steps:
+      - run:
+          name: Client Build
+          command: yarn client:build
+  client_deploy:
+    description: "Command for Client Deploy"
+    steps:
+      - run:
+          name: Client Deploy
+          command: yarn client:deploy
   install_server:
     description: "Command for Server Installation"
     steps:
@@ -82,6 +100,8 @@ jobs:
       - checkout
       - install_server
       - build_server
+      - client_install
+      - client_build
       - persist_to_workspace:
           root: ./
           paths:
@@ -107,6 +127,8 @@ jobs:
       - eb/setup
       - list_dirs
       - deploy_server
+      - client_deploy
+
 ```
 
 
@@ -118,6 +140,10 @@ jobs:
 Finally a Work flow is defined to set the Pipeline for Circle CI to Deploy the API.
 
 ```yaml
+# ...................... CI/CD Workflow ..............................
+# The Server is build and tested using the defined jobs and commands .
+# the Deployment then start using Elastic Beanstalk CLI              .
+# ....................................................................
 workflows:
   build_test_deploy:
     jobs:
@@ -142,6 +168,6 @@ workflows:
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/Ahmad-Abdalmageed/Store-API/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/Ahmad-Abdalmageed/Store-API/tree/master)
 
-![ci](./imgs/ci.png)
+![build](./imgs/build.png)
 
-![pipeline](./imgs/pipeline.png)
+![ci](./imgs/ci.png)
