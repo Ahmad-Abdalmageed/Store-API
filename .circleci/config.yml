@@ -12,6 +12,12 @@ commands:
       - run:
           name: List ALL
           command: ls server/
+  deploy_client:
+    description: "Updates the Client Code"
+    steps:
+      - run:
+          name: Update Client
+          command: yarn client:deploy
   install_server:
     description: "Command for Server Installation"
     steps:
@@ -84,6 +90,7 @@ jobs:
       - eb/setup
       - list_dirs
       - deploy_server
+      - deploy_client
 
 # ...................... CI/CD Workflow ..............................
 # The Server is build and tested using the defined jobs and commands .
