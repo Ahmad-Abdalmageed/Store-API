@@ -15,7 +15,7 @@ Defined at [.circleci](../.circleci) is the Process the Project goes through fro
 
 ## Commands
 
-In this Section we Defined Reusable commands as stated in the Circle CI [Documentation](https://circleci.com/docs/2.0/concepts), These Commands will be used in the jobs section. Also Added a Client Deploy Command.
+In this Section we Defined Reusable commands as stated in the Circle CI [Documentation](https://circleci.com/docs/2.0/concepts), These Commands will be used in the jobs section.
 
 ```sh
 # Application Re-usable Commands
@@ -26,12 +26,6 @@ commands:
       - run:
           name: List ALL
           command: ls server/
-  deploy_client:
-    description: "Updates the Client Code"
-    steps:
-      - run:
-          name: Update Client
-          command: yarn client:deploy
   install_server:
     description: "Command for Server Installation"
     steps:
