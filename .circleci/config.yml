@@ -12,6 +12,24 @@ commands:
       - run:
           name: List ALL
           command: ls server/
+  client_install:
+    description: "Command for Client Installation"
+    steps:
+      - run:
+          name: Client Install
+          command: yarn client:install
+  client_build:
+    description: "Command for Building Client"
+    steps:
+      - run:
+          name: Client Build
+          command: yarn client:build
+  client_deploy:
+    description: "Command for Client Deploy"
+    steps:
+      - run:
+          name: Client Deploy
+          command: yarn client:deploy
   install_server:
     description: "Command for Server Installation"
     steps:
@@ -59,6 +77,8 @@ jobs:
       - checkout
       - install_server
       - build_server
+      - client_install
+      - client_build
       - persist_to_workspace:
           root: ./
           paths:
@@ -84,6 +104,7 @@ jobs:
       - eb/setup
       - list_dirs
       - deploy_server
+      - client_deploy
 
 # ...................... CI/CD Workflow ..............................
 # The Server is build and tested using the defined jobs and commands .
